@@ -1,48 +1,32 @@
-import speech_recognition as sr 
+from core import listen_fn
 import pyttsx3
 import webbrowser
+import datetime
 
-recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-def listen():
-    with sr.Microphone() as source:
-        print("Listening...")
-        recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source)
-
-        try:
-            print("Recognizing...")
-            query = recognizer.recognize_google(audio)
-            print(f"You said: {query}")
-            return query.lower()
-        
-        except sr.UnknownValueError:
-            print("Sorry, I didn't catch that.")
-            return ""
-        
-        except sr.RequestError:
-            print("Sorry, I'm having trouble recognizing your speech.")
-            return ""
         
 def respond(query):
     if "hello" in query:
         speak("Hello! How can I help you today?")
 
     elif "open google" in query:
-        webbrowser.open('https://www.google.com')
         speak("Opening Google.")
+        webbrowser.open('https://www.google.com')
+
+    elif "open youtube" in query:
+        speak("Opening Youtube.")
+        webbrowser.open('https://www.youtube.com')
 
     elif "what is the time" in query:
-        # You can implement time-related functionality here
-        # For example: datetime.datetime.now().strftime("%I:%M %p")
-        speak("I'm sorry, I cannot provide the current time.")
+        current_time = datetime.datetime.now().strftime("%I:%M %p")  # Get current time
+        speak(f"The current time is {current_time}.")
 
-    elif "goodbye" in query:
+    elif "goodbye" or "good bye" in query:
         speak("Goodbye!")
         exit()
 
@@ -51,6 +35,6 @@ def respond(query):
 
 if __name__ == "__main__":
     while True:
-        user_input = listen()
+        user_input = listen_fn.listen()
         if user_input:
             respond(user_input)
