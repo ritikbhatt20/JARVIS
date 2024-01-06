@@ -1,10 +1,14 @@
 import json
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()   #load env variables
 
 def weather_data():
-    weather_api_key = "fcd2c236893559071f53147e2c72132f"
+    OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
     city = "Ghaziabad"
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={weather_api_key}&units=metric"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_API_KEY}&units=metric"
         
     response = requests.get(url)
     if response.status_code == 200:
