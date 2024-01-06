@@ -34,7 +34,7 @@ def respond(query):
     elif "thank you" in query or "thankyou" in query:
         speak("Your welcome! How can I assist you further?")
 
-    elif "goodbye" or "good bye" in query:
+    elif "goodbye" in query or "good bye" in query:
         speak("Goodbye!")
         exit()
 
