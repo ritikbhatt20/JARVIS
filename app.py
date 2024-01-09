@@ -1,5 +1,6 @@
 from core import listen_fn
 from core import weather
+from core import translate
 import pyttsx3
 import webbrowser
 import datetime
@@ -26,6 +27,9 @@ def respond(query):
     elif "weather" in query or "weather update" in query:
         text = weather.weather_data()
         speak(text)
+
+    elif "translate" in query:
+        translate.translate()
 
     elif "what is the time" in query:
         current_time = datetime.datetime.now().strftime("%I:%M %p")  # Get current time
